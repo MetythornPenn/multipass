@@ -1,0 +1,65 @@
+#cloud-config
+
+############################
+# 1. Set Hostname & Timezone
+############################
+hostname: multipass
+timezone: Etc/UTC
+
+############################
+# 2. Create a User
+############################
+users:
+  - name: metythorn
+    # Specify the default shell
+    shell: /bin/bash
+    # Make 'devuser' an admin with passwordless sudo
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    # Replace this SSH key with your own public key
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7tjvOwC/Z8wgNUg4kXA2bye0Fdwf9vbYzcEJQAbZOx metythorn@gmail.com
+
+
+############################
+# 3. Upgrade & Install Packages
+############################
+# Automatically upgrade the instance on first boot
+package_upgrade: true
+
+# List packages you want to install
+packages:
+  - curl
+  - vim
+  - git
+  - apache2
+
+############################
+# 4. Write Files (Optional)
+############################
+# Example: create or overwrite a file on the instance
+write_files:
+  - path: /etc/motd
+    content: |
+      **********************************
+      *  Welcome to my Ubuntu VM!      *
+      *  Provisioned by cloud-init.    *
+      **********************************
+
+############################
+# 5. Run Commands on First Boot
+############################
+runcmd:
+  # Enable and start Apache2
+  - systemctl enable apache2
+  - systemctl start apache2
+
+  # Example: echo a message into a test file
+  - echo "Hello from cloud-init!" > /home/devuser/hello.txt
+
+  # Example: set up a custom index.html for Apache
+  - echo "<h1>Hello World from Cloud-Init!</h1>" | tee /var/www/html/index.html
+
+  # (Optional) Additional commands you’d like to run:
+  # - apt-get remove --purge <package>
+  # - snap install <snap-package>
+  # - etc.
