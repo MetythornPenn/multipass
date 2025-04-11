@@ -17,7 +17,7 @@ users:
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     # Replace this SSH key with your own public key
     ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7tjvOwC/Z8wgNUg4kXA2bye0Fdwf9vbYzcEJQAbZOx metythorn@gmail.com
+      - ssh-ed25519 
 
 
 ############################
